@@ -1,0 +1,338 @@
+/* ==============================
+   ABOUT PAGE STYLES
+   ============================== */
+
+.about {
+  padding-top: 80px;
+}
+
+/* Page Header */
+.page-header {
+  position: relative;
+  text-align: center;
+  border-bottom: 1px solid var(--border-subtle);
+  overflow: hidden;
+}
+
+.page-header__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.page-header__title {
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.page-header__sub {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Story */
+.about-story__grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+.about-story__title {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+  line-height: 1.25;
+}
+
+.about-story__text {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.about-story__text p {
+  color: var(--text-secondary);
+  font-size: 0.97rem;
+  line-height: 1.8;
+}
+
+.about-story__text strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.about-story__quick-facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.quick-fact {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.quick-fact__label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.quick-fact__value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* About Card */
+.about-card {
+  padding: 28px;
+  position: sticky;
+  top: 100px;
+}
+
+.about-card__header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.about-card__avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #fff;
+  flex-shrink: 0;
+  box-shadow: 0 8px 24px rgba(6, 182, 212, 0.3);
+}
+
+.about-card__name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.about-card__role {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.about-card__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.about-card__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.about-card__stat-val {
+  font-size: 1.3rem;
+  font-weight: 800;
+  font-family: var(--font-mono);
+}
+
+.about-card__stat-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.about-card__tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.about-card__status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: #10B981;
+  font-weight: 500;
+}
+
+.about-card__status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10B981;
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@media (max-width: 900px) {
+  .about-story__grid { grid-template-columns: 1fr; gap: 40px; }
+  .about-story__quick-facts { grid-template-columns: 1fr 1fr; }
+  .about-card { position: static; }
+}
+
+/* How I Build */
+.how-i-build {
+  position: relative;
+  overflow: hidden;
+}
+
+.how-i-build__bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent, rgba(6, 182, 212, 0.02) 50%, transparent);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.how-i-build__title {
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.how-i-build__sub {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  max-width: 480px;
+  margin-bottom: 48px;
+  line-height: 1.6;
+}
+
+.build-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.build-step {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 24px;
+  padding: 28px 32px;
+  align-items: center;
+  position: relative;
+  transition: var(--transition-spring);
+}
+
+.build-step:hover {
+  transform: translateX(8px);
+  border-color: rgba(6, 182, 212, 0.25);
+}
+
+.build-step__number {
+  font-size: 2.5rem;
+  font-weight: 900;
+  font-family: var(--font-mono);
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.build-step__title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.build-step__desc {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 600px) {
+  .build-step {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 24px;
+  }
+}
+
+/* Strengths */
+.strengths__title {
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: 48px;
+}
+
+.strengths__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.strength-card {
+  padding: 28px;
+  transition: var(--transition-spring);
+  cursor: default;
+}
+
+.strength-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.35);
+}
+
+.strength-card__icon {
+  font-size: 1.8rem;
+  margin-bottom: 16px;
+}
+
+.strength-card__title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.strength-card__desc {
+  color: var(--text-secondary);
+  font-size: 0.87rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 900px) {
+  .strengths__grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 600px) {
+  .strengths__grid { grid-template-columns: 1fr; }
+}
+

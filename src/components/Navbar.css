@@ -1,0 +1,263 @@
+/* ==============================
+   NAVBAR STYLES
+   ============================== */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 16px 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar--scrolled {
+  background: rgba(11, 15, 25, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 12px 0;
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.3);
+}
+
+.navbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+/* Logo */
+.navbar__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.navbar__logo-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: #fff;
+  letter-spacing: 0.05em;
+}
+
+.navbar__logo-text {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+/* Desktop Links */
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+}
+
+/* ── Desktop nav link base ── */
+.navbar__link {
+  position: relative;
+  padding: 7px 12px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: color 0.25s ease, background 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+.navbar__link:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* Active link — no extra padding needed; pill handles spacing */
+.navbar__link--active {
+  color: var(--accent-cyan) !important;
+  background: transparent !important;
+}
+
+/* ── Active pill badge ── */
+.navbar__active-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px 4px 8px;
+  background: rgba(6, 182, 212, 0.08);        /* cyan-950/40 equivalent */
+  border: 1px solid rgba(6, 182, 212, 0.28);  /* cyan-500/30 */
+  border-radius: 100px;
+  color: var(--accent-cyan);
+  font-weight: 600;
+  font-size: 0.88rem;
+  line-height: 1;
+  /* Subtle entrance */
+  animation: pill-pop 0.22s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes pill-pop {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1);    }
+}
+
+/* ── 4-point star icon ── */
+.nav-star {
+  width: 11px;
+  height: 11px;
+  color: var(--accent-cyan);
+  flex-shrink: 0;
+  /* Continuous slow spin */
+  animation: star-spin 3s linear infinite;
+  /* Electric cyan neon glow */
+  filter:
+    drop-shadow(0 0 4px rgba(6, 182, 212, 0.9))
+    drop-shadow(0 0 10px rgba(6, 182, 212, 0.55))
+    drop-shadow(0 0 18px rgba(6, 182, 212, 0.3));
+}
+
+@keyframes star-spin {
+  from { transform: rotate(0deg);   }
+  to   { transform: rotate(360deg); }
+}
+
+/* Actions */
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.navbar__cta {
+  font-size: 0.85rem;
+  padding: 10px 20px;
+}
+
+/* Hamburger */
+.navbar__hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-base);
+}
+
+.navbar__hamburger span {
+  display: block;
+  height: 2px;
+  background: var(--text-secondary);
+  border-radius: 2px;
+  transition: var(--transition-base);
+  transform-origin: center;
+}
+
+.navbar__hamburger--open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.navbar__hamburger--open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.navbar__hamburger--open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Mobile Menu */
+.navbar__mobile {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(11, 15, 25, 0.98);
+  backdrop-filter: blur(20px);
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.navbar__mobile--open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.navbar__mobile-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 8px;
+  padding: 24px;
+}
+
+.navbar__mobile-link {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 12px 32px;
+  border-radius: var(--radius-md);
+  transition: var(--transition-base);
+  width: 100%;
+  text-align: center;
+}
+
+.navbar__mobile-link:hover,
+.navbar__mobile-link--active {
+  color: var(--accent-cyan);
+  background: rgba(6, 182, 212, 0.05);
+}
+
+/* ── Mobile active pill ── */
+.navbar__mobile-active-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 6px 20px 6px 14px;
+  background: rgba(6, 182, 212, 0.08);
+  border: 1px solid rgba(6, 182, 212, 0.28);
+  border-radius: 100px;
+  color: var(--accent-cyan);
+  animation: pill-pop 0.22s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Make the star a touch larger in the mobile overlay */
+.navbar__mobile-active-pill .nav-star {
+  width: 14px;
+  height: 14px;
+}
+
+@media (max-width: 900px) {
+  .navbar__links { display: none; }
+  .navbar__hamburger { display: flex; }
+  .navbar__mobile { display: block; }
+}
+
+@media (max-width: 480px) {
+  .navbar__cta { display: none; }
+}
+
