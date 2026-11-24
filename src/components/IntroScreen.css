@@ -1,416 +1,239 @@
 /* ============================================================
-   INTRO SCREEN — Bruno Simon-inspired 3D grid entrance
+   UI/UX KINETIC TYPOGRAPHY + INSIDE-WORD AURORA ANIMATION
    ============================================================ */
 
-/* ── Root container ── */
-.intro {
+.ux-intro {
   position: fixed;
   inset: 0;
   z-index: 10000;
+  background: radial-gradient(circle at 50% 45%, #13092b 0%, #050816 80%);
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 24px;
   overflow: hidden;
-  transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.7s cubic-bezier(0.76, 0, 0.24, 1),
+    opacity 0.55s ease;
 }
 
-.intro--exit {
-  opacity: 0;
-  transform: scale(1.07);
+.ux-intro--exit {
+  transform: translateY(-100%);
   pointer-events: none;
 }
 
-/* ── Canvas fills entire bg ── */
-.intro__canvas {
+/* Subtle Architectural UI Grid */
+.ux-intro__grid {
   position: absolute;
   inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-/* ── Centered overlay ── */
-.intro__center {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-}
-
-/* ════════════════════════════════════════════════════
-   MANDALA / BLOOMING FLOWER
-   ════════════════════════════════════════════════════ */
-
-.mandala {
-  position: relative;
-  width: 290px;
-  height: 290px;
-  /* Slow breath after bloom */
-  animation: none;
-}
-
-.mandala--bloom {
-  animation: mandala-breathe 4s ease-in-out 0.9s infinite;
-}
-
-@keyframes mandala-breathe {
-  0%, 100% { filter: drop-shadow(0 0 18px rgba(124, 58, 237, 0.35)); }
-  50%       { filter: drop-shadow(0 0 36px rgba(167, 139, 250, 0.55)); }
-}
-
-/* ── Concentric glow rings ── */
-.m-ring {
-  position: absolute;
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  opacity: 0;
-  transition: transform 0.65s cubic-bezier(0.34, 1.4, 0.64, 1),
-              opacity   0.4s ease;
-}
-
-.m-ring--1 {
-  width:  150px;
-  height: 150px;
-  border: 1.5px solid rgba(167, 139, 250, 0.45);
-  box-shadow:
-    0 0  14px rgba(167, 139, 250, 0.25),
-    inset 0 0 14px rgba(124, 58, 237, 0.12);
-}
-.m-ring--2 {
-  width:  210px;
-  height: 210px;
-  border: 1px solid rgba(124, 58, 237, 0.22);
-  box-shadow: 0 0 10px rgba(124, 58, 237, 0.12);
-}
-.m-ring--3 {
-  width:  278px;
-  height: 278px;
-  border: 1px solid rgba(99, 44, 199, 0.13);
-}
-
-/* Bloom in with stagger */
-.mandala--bloom .m-ring--3 { transform: translate(-50%,-50%) scale(1); opacity: 1; transition-delay: 0.00s; }
-.mandala--bloom .m-ring--2 { transform: translate(-50%,-50%) scale(1); opacity: 1; transition-delay: 0.06s; }
-.mandala--bloom .m-ring--1 { transform: translate(-50%,-50%) scale(1); opacity: 1; transition-delay: 0.12s; }
-
-/* Pulse rings after bloom */
-.mandala--bloom .m-ring {
-  animation: ring-pulse 3.5s ease-in-out infinite;
-}
-.mandala--bloom .m-ring--2 { animation-delay: 0.4s; }
-.mandala--bloom .m-ring--3 { animation-delay: 0.8s; }
-
-@keyframes ring-pulse {
-  0%, 100% { opacity: 0.55; }
-  50%       { opacity: 1; }
-}
-
-/* ── Primary petals (8 × 45°) ── */
-.m-petal {
-  position: absolute;
-  width:  42px;
-  height: 92px;
-  left:  calc(50% - 21px);    /* horizontally centered */
-  top:   calc(50% - 92px);    /* base of petal = mandala center */
-  background: linear-gradient(
-    to top,
-    rgba(109, 40, 217, 0.00)  0%,
-    rgba(124, 58, 237, 0.55) 30%,
-    rgba(139, 92, 246, 0.42) 65%,
-    rgba(167, 139, 250, 0.12) 100%
-  );
-  border-radius: 52% 52% 18% 18% / 65% 65% 35% 35%;
-  transform-origin: 50% 100%;                    /* rotate around mandala center */
-  transform: rotate(var(--rot)) scaleY(0) scaleX(0.1);
-  opacity: 0;
-  /* Only animate when parent has .mandala--bloom */
-}
-
-.mandala--bloom .m-petal {
-  animation: petal-bloom 0.7s cubic-bezier(0.34, 1.25, 0.64, 1) forwards;
-  animation-delay: var(--delay);
-}
-
-@keyframes petal-bloom {
-  0%   { transform: rotate(var(--rot)) scaleY(0)    scaleX(0.1); opacity: 0;    }
-  65%  { transform: rotate(var(--rot)) scaleY(1.08) scaleX(1.05); opacity: 0.92; }
-  100% { transform: rotate(var(--rot)) scaleY(1)    scaleX(1);   opacity: 0.76; }
-}
-
-/* ── Smaller accent petals (8 × 45°, offset 22.5°) ── */
-.m-petal--sm {
-  width:  27px;
-  height: 60px;
-  left:  calc(50% - 13.5px);
-  top:   calc(50% - 60px);
-  background: linear-gradient(
-    to top,
-    rgba(99, 44, 199, 0.00)   0%,
-    rgba(99, 102, 241, 0.42) 40%,
-    rgba(167, 139, 250, 0.20) 100%
-  );
-  border-radius: 50% 50% 20% 20% / 65% 65% 35% 35%;
-  transform-origin: 50% 100%;
-}
-
-.mandala--bloom .m-petal--sm {
-  animation: petal-bloom 0.55s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
-  animation-delay: var(--delay);
-}
-
-/* ── Crystalline spikes (4 × 90°) ── */
-.m-spike {
-  position: absolute;
-  width:  2.5px;
-  height: 128px;
-  left:  calc(50% - 1.25px);
-  top:   calc(50% - 128px);
-  background: linear-gradient(
-    to top,
-    rgba(167, 139, 250, 0)    0%,
-    rgba(167, 139, 250, 0.45) 40%,
-    rgba(224, 231, 255, 0.70) 72%,
-    rgba(255, 255, 255, 0.25) 100%
-  );
-  border-radius: 2px;
-  transform-origin: 50% 100%;
-  transform: rotate(var(--rot)) scaleY(0);
-  opacity: 0;
-}
-
-.mandala--bloom .m-spike {
-  animation: spike-bloom 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  animation-delay: var(--delay);
-}
-
-@keyframes spike-bloom {
-  from { transform: rotate(var(--rot)) scaleY(0); opacity: 0;   }
-  to   { transform: rotate(var(--rot)) scaleY(1); opacity: 0.72; }
-}
-
-/* ── Orbiting ✦ stars at petal tips ── */
-.m-orbit-star {
-  position: absolute;
-  width: 24px;
-  height: 24px;
-  /* Place them at the mandala's outer radius */
-  left:  calc(50% - 12px);
-  top:   calc(50% - 140px);    /* 140px above center */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.75rem;
-  color: rgba(196, 181, 253, 0.85);
-  transform-origin: 12px 140px;   /* rotate around mandala center */
-  transform: rotate(var(--rot)) scale(0);
-  opacity: 0;
-  filter:
-    drop-shadow(0 0 4px rgba(167, 139, 250, 0.9))
-    drop-shadow(0 0 10px rgba(124, 58, 237, 0.6));
-  animation: none;
-}
-
-.mandala--bloom .m-orbit-star {
-  animation:
-    orbit-star-pop  0.4s cubic-bezier(0.34, 1.6, 0.64, 1) forwards,
-    orbit-star-spin 8s linear infinite;
-  animation-delay: var(--delay), var(--delay);
-}
-
-@keyframes orbit-star-pop {
-  from { transform: rotate(var(--rot)) scale(0); opacity: 0;   }
-  to   { transform: rotate(var(--rot)) scale(1); opacity: 0.9; }
-}
-
-@keyframes orbit-star-spin {
-  /* spin around the mandala center continuously */
-  from { transform: rotate(var(--rot)) scale(1); }
-  to   { transform: rotate(calc(var(--rot) + 360deg)) scale(1); }
-}
-
-/* ── Profile image core ── */
-.m-core {
-  position: absolute;
-  width:  108px;
-  height: 108px;
-  border-radius: 50%;
-  top:  50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  overflow: hidden;
-  border: 2px solid rgba(167, 139, 250, 0.65);
-  box-shadow:
-    0 0 0  5px rgba(124, 58, 237, 0.12),
-    0 0  22px rgba(167, 139, 250, 0.45),
-    0 0  55px rgba(124, 58, 237, 0.22),
-    0 0  90px rgba(99,  44, 199, 0.12);
-  transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) 0.42s;
-  z-index: 10;
-  background: #0d0520;    /* shows if image fails */
-}
-
-.mandala--bloom .m-core {
-  transform: translate(-50%, -50%) scale(1);
-}
-
-.m-avatar {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* Fallback initials — hidden when image loads */
-.m-avatar-fallback {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Inter', sans-serif;
-  font-weight: 900;
-  font-size: 1.5rem;
-  color: rgba(167, 139, 250, 0.7);
-  z-index: -1;   /* behind <img> */
-}
-
-/* ════════════════════════════════════════════════════
-   NAME TAG
-   ════════════════════════════════════════════════════ */
-.intro__name {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  opacity: 0;
-  transform: translateY(14px);
-  transition: opacity 0.5s ease 0.5s, transform 0.5s ease 0.5s;
-}
-
-.intro__name--show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.intro__name-text {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.3rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  background: linear-gradient(135deg, #c4b5fd, #818cf8, #c4b5fd);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: name-shimmer 3s linear infinite;
-}
-
-@keyframes name-shimmer {
-  to { background-position: 200% center; }
-}
-
-.intro__name-role {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: rgba(139, 92, 246, 0.65);
-}
-
-/* ════════════════════════════════════════════════════
-   ENTER BUTTON
-   ════════════════════════════════════════════════════ */
-.intro__enter {
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  background-image:
+    linear-gradient(to right, rgba(167, 139, 250, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(167, 139, 250, 0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(circle at center, black 30%, transparent 78%);
+  -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 78%);
   pointer-events: none;
 }
 
-.intro__enter--show {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
+.ux-intro__wrap {
+  position: relative;
+  z-index: 2;
+  max-width: 880px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
-.enter-btn {
+/* Top Eyebrow */
+.ux-intro__eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 14px;
-  padding: 14px 34px;
-  background: rgba(124, 58, 237, 0.08);
-  border: 1px solid rgba(167, 139, 250, 0.38);
-  border-radius: 100px;
-  color: rgba(196, 181, 253, 0.88);
+  gap: 10px;
+  margin-bottom: 14px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 500;
-  letter-spacing: 0.1em;
-  cursor: pointer;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  animation: btn-pulse 2.8s ease-in-out infinite;
-  user-select: none;
+  letter-spacing: 0.22em;
+  color: rgba(196, 181, 253, 0.85);
+  animation: uxFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.enter-btn:hover {
-  background: rgba(124, 58, 237, 0.18);
-  border-color: rgba(167, 139, 250, 0.72);
-  color: #fff;
-  transform: scale(1.05);
-  box-shadow:
-    0 0  28px rgba(167, 139, 250, 0.28),
-    0 0  55px rgba(124, 58, 237, 0.14);
+.ux-intro__spark {
+  color: #a78bfa;
+  animation: uxSpin 5s linear infinite;
 }
 
-.enter-btn:active {
-  transform: scale(0.97);
+@keyframes uxSpin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-@keyframes btn-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(167, 139, 250, 0); }
-  50%       { box-shadow: 0 0 0 10px rgba(167, 139, 250, 0.07),
-                           0 0 30px rgba(124, 58, 237, 0.18); }
-}
-
-/* Stars flanking the button text */
-.enter-star-left,
-.enter-star-right {
-  font-size: 0.85rem;
-  color: rgba(167, 139, 250, 0.75);
+/* ── FLOATING HERO WORDS STAGE ── */
+.ux-intro__title-stage {
+  position: relative;
   display: inline-block;
-  filter:
-    drop-shadow(0 0 4px rgba(167, 139, 250, 0.9))
-    drop-shadow(0 0 10px rgba(124, 58, 237, 0.6));
+  animation:
+    uxTitleEnter 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+    uxWordFloat 3.6s ease-in-out 0.75s infinite alternate;
 }
 
-.enter-star-left  { animation: star-spin 3.5s linear infinite; }
-.enter-star-right { animation: star-spin 3.5s linear infinite reverse; }
+/* Main Masked Words with Moving Code + Aurora Inside */
+.ux-intro__title {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(2.6rem, 7.8vw, 5.6rem);
+  font-weight: 900;
+  line-height: 1.06;
+  letter-spacing: -0.04em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.16);
 
-/* ════════════════════════════════════════════════════
-   RESPONSIVE
-   ════════════════════════════════════════════════════ */
-@media (max-width: 480px) {
-  .mandala {
-    width:  220px;
-    height: 220px;
-    transform: scale(0.82);
+  /* Layer 1: Moving UI/UX Light Sheen | Layer 2: Drifting Tech Code | Layer 3: Cosmic Aurora */
+  background-image:
+    linear-gradient(110deg,
+      transparent 20%,
+      rgba(255, 255, 255, 0.92) 48%,
+      rgba(196, 181, 253, 0.85) 52%,
+      transparent 80%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='340' height='130' viewBox='0 0 340 130'%3E%3Cg font-family='monospace' font-weight='700'%3E%3Ctext x='14' y='32' fill='%23fb923c' font-size='20'%3E%26lt;HTML/%26gt;%3C/text%3E%3Ctext x='138' y='28' fill='%2338bdf8' font-size='19'%3E.ui-ux%7B%7D%3C/text%3E%3Ctext x='250' y='34' fill='%23fde047' font-size='20'%3EES6+%3C/text%3E%3Ctext x='28' y='72' fill='%2361dafb' font-size='22'%3E%E2%9A%9B React%3C/text%3E%3Ctext x='152' y='70' fill='%23c084fc' font-size='20'%3ENode.js%3C/text%3E%3Ctext x='258' y='74' fill='%234ade80' font-size='18'%3EMongoDB%3C/text%3E%3Ctext x='22' y='112' fill='%23f472b6' font-size='18'%3Eflex · grid%3C/text%3E%3Ctext x='175' y='112' fill='%2393c5fd' font-size='20'%3EREST API%3C/text%3E%3C/g%3E%3C/svg%3E"),
+    linear-gradient(135deg, #7c3aed 0%, #3b82f6 50%, #ec4899 100%);
+
+  background-size: 220% 100%, 300px 115px, 100% 100%;
+  background-blend-mode: overlay, screen, normal;
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  animation: uxInsideWave 3.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Soft Blurred Ambient Glow Behind Words */
+.ux-intro__title-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(2.6rem, 7.8vw, 5.6rem);
+  font-weight: 900;
+  line-height: 1.06;
+  letter-spacing: -0.04em;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.45), rgba(56, 189, 248, 0.35));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: blur(22px);
+  pointer-events: none;
+}
+
+@keyframes uxInsideWave {
+  0% {
+    background-position: 140% 0%, 0px 0px, 0% 50%;
   }
 
-  .enter-btn {
-    padding: 12px 24px;
-    font-size: 0.75rem;
-    gap: 10px;
+  100% {
+    background-position: -140% 0%, 300px -115px, 100% 50%;
+  }
+}
+
+@keyframes uxTitleEnter {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.95);
+    filter: blur(8px);
   }
 
-  .intro__name-text {
-    font-size: 1.1rem;
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes uxWordFloat {
+  from {
+    transform: translateY(0px);
+  }
+
+  to {
+    transform: translateY(-7px);
+  }
+}
+
+/* Bio Subtitle */
+.ux-intro__bio {
+  margin: 18px 0 0;
+  max-width: 560px;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.92rem, 1.9vw, 1.05rem);
+  line-height: 1.65;
+  color: rgba(226, 232, 240, 0.72);
+  animation: uxFadeUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.14s both;
+}
+
+/* ── UI/UX Tech Stack Pills ── */
+.ux-intro__tech-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.ux-intro__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  animation: uxPillPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+
+.ux-intro__pill:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.ux-intro__pill-icon {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.ux-intro__pill-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: rgba(241, 245, 249, 0.88);
+}
+
+@keyframes uxPillPop {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes uxFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
