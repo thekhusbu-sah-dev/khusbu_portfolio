@@ -20,10 +20,12 @@ import './index.css'
 function ScrollToTop() {
   const { pathname } = useLocation()
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' })
+    const t = setTimeout(() => window.scrollTo({ top: 0, behavior: 'instant' }), 0)
+    return () => clearTimeout(t)
   }, [pathname])
   return null
 }
+
 /* ── Main portfolio app (always rendered, hidden behind intro) ── */
 function AppContent() {
   const location = useLocation()
